@@ -4,6 +4,6 @@
 	<title>{{ title }}</title>
 </head>
 <body>
-	<h1>Welcome to Homepage, {{ name }}!</h1>
+	<h1>Welcome to Homepage, {{ request.user.username | capfirst }}!</h1>
 </body>
 </html>

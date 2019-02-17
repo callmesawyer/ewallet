@@ -9,7 +9,7 @@ from django.http import HttpResponse
 def home(request):
 	context = {
 		'title': 'Home Page',
-		'name' : 'Roshan'
+		'name' : 'roshan'
 	}
 	return render(request, 'home.html', context)
 
