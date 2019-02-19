@@ -4,7 +4,7 @@ from datetime import date
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
-from .models import Profile
+from .models import Profile, Transaction, Account
 
 
 admin.site.unregister(User)
@@ -24,7 +24,14 @@ class CustomUserAdmin(UserAdmin):
             return list()
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
+@admin.register(Account)
+class AccountAdmin(admin.ModelAdmin):
+	list_display = ('user', 'balance', 'point')
 
+
+@admin.register(Transaction)
+class TransactionAdmin(admin.ModelAdmin):
+	list_display = ('from_user', 'to_user', 'amount', 'created_on')
 
 
 
