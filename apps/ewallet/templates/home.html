@@ -4,6 +4,12 @@
 	<title>{{ title }}</title>
 </head>
 <body>
-	<h1>Welcome to Homepage, {{ request.user.username | capfirst }}!</h1>
+	<h1>Welcome to Homepage</h1>
+	{% if request.user.is_authenticated %}
+		{{ request.user.username | capfirst }}
+		<a href="{% url 'send' %}">Balance Transfer</a>
+	{% else %}
+		<a href="{% url 'login' %}">Login</a>
+	{% endif %}
 </body>
 </html>
