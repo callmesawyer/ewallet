@@ -46,6 +46,9 @@ class Account(models.Model):
 	balance = models.DecimalField(max_digits=5, decimal_places=2, default=0)
 	point = models.DecimalField(max_digits=5, decimal_places=2, default=0)
 
+	def __str__(self):
+		return self.user.username
+
 class Transaction(models.Model):
 	from_user = models.ForeignKey(User, related_name='from_user',on_delete=models.CASCADE)
 	to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.SET_NULL, null=True)
@@ -67,11 +70,11 @@ def balance_transfer(sender, instance, created, **kwargs):
 		from_user.save()
 		to_user.save()
 
-@receiver(post_save, sender=User)
-def create_user_profile_and_account(sender, instance, created, **kwargs):
-	if created:
-		Profile.objects.create(user=instance)
-		Account.objects.create(user=instance)
+# @receiver(post_save, sender=User)
+# def create_user_profile_and_account(sender, instance, created, **kwargs):
+# 	if created:
+# 		Profile.objects.create(user=instance)
+# 		Account.objects.create(user=instance)
 
-	instance.profile.save()
-	instance.account.save()
+# 	instance.profile.save()
+# 	instance.account.save()
