@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from django.views.generic import FormView
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 
 from .models import Transaction, Profile, Account
 from .forms import TransactionForm, CustomUserCreationForm
@@ -17,9 +17,10 @@ class SignUpView(CreateView):
 
 	def form_valid(self, form):
 		user = form.save()
-		mobile = form.cleaned_data.get('mobile')
-		Profile.objects.create(user=user, mobile_no=mobile) # mobile_field_name = mobie
-		Account.objects.create(user=user)
+		mobile_no = form.cleaned_data.get('mobile_no')
+		# print(f'Form Validate {mobile_no}')
+		Profile.objects.create(user=user, mobile_no=mobile_no) # mobile_field_name = mobie
+		Account.objects.create(user=user, balance=50, point=10)
 		
 		return super().form_valid(form)
 
@@ -46,6 +47,7 @@ class TransactionView(CreateView):
 class UserDetailView(LoginRequiredMixin, DetailView):
 	model = User
 	template_name = 'user_detail.html'
+
 	def get_object(self, queryset=None):
 		if queryset is None:
 			queryset = self.get_queryset()
@@ -53,3 +55,8 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 			queryset = queryset.filter(pk=self.request.user.id) # filter logged in user
 			obj = queryset.get()
 			return obj
+
+
+# class AccountUpdateView(UpdateView):
+# 	model = 
+
